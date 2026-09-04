@@ -1,0 +1,171 @@
+````markdown
+
+# 🧪 Teste de API — Alibaba Cloud Model Studio + Qwen3.8-Max
+
+Repositório criado para validar a comunicação com o modelo **Qwen3.8-Max** através do **Alibaba Cloud Model Studio**, utilizando autenticação por **Workspace API Key** e integração compatível com a API da OpenAI.
+
+O objetivo inicial foi verificar conectividade, autenticação, estabilidade e comportamento básico da API antes de avançar para integrações mais completas.
+
+---
+
+## 🎯 Objetivos
+
+- Validar o acesso ao modelo `qwen3.8-max`;
+- Confirmar autenticação via Workspace API Key;
+- Testar comunicação via HTTP e Python;
+- Medir latência básica;
+- Verificar estabilidade em múltiplas requisições;
+- Criar uma base simples para experimentos posteriores.
+
+---
+
+## 🧰 Tecnologias
+
+- Python
+- OpenAI SDK
+- Alibaba Cloud Model Studio
+- Qwen3.8-Max
+- python-dotenv
+
+---
+
+## 📁 Estrutura
+
+```text
+teste_api_alibaba/
+├── .env.example
+├── .gitignore
+├── README.md
+├── requirements.txt
+├── teste_qwen.py
+└── teste_estabilidade.py
+````
+
+---
+
+## ⚙️ Configuração
+
+Crie um ambiente virtual:
+
+```bash
+python -m venv .venv
+```
+
+Ative o ambiente no Git Bash:
+
+```bash
+source .venv/Scripts/activate
+```
+
+Instale as dependências:
+
+```bash
+pip install -r requirements.txt
+```
+
+Crie um arquivo `.env` com base no `.env.example`:
+
+```env
+ALIBABA_WORKSPACE_ID=seu_workspace_id
+DASHSCOPE_API_KEY=sua_api_key
+```
+
+> ⚠️ O arquivo `.env` não deve ser versionado.
+
+---
+
+## 🚀 Execução
+
+### Teste básico
+
+```bash
+python teste_qwen.py
+```
+
+Esse script valida:
+
+* autenticação;
+* acesso ao workspace;
+* disponibilidade do modelo;
+* resposta da API;
+* latência;
+* consumo de tokens.
+
+---
+
+### Teste de estabilidade
+
+```bash
+python teste_estabilidade.py
+```
+
+O teste executa múltiplas chamadas consecutivas e apresenta:
+
+* quantidade de sucessos;
+* quantidade de falhas;
+* latência mínima;
+* latência média;
+* latência máxima;
+* desvio padrão.
+
+---
+
+## 📊 Resultados obtidos
+
+Durante a validação inicial foram realizadas **10 chamadas consecutivas** ao modelo.
+
+```text
+Chamadas: 10
+Sucessos: 10
+Falhas: 0
+
+Latência mínima: 1.67s
+Latência média:  2.08s
+Latência máxima: 3.81s
+Desvio padrão:   0.70s
+```
+
+Taxa de sucesso observada:
+
+```text
+100%
+```
+
+---
+
+## ✅ Status
+
+```text
+[✓] Workspace validado
+[✓] API Key validada
+[✓] Endpoint validado
+[✓] Qwen3.8-Max acessível
+[✓] Comunicação via cURL
+[✓] Comunicação via Python
+[✓] Teste de estabilidade
+[✓] 10/10 requisições bem-sucedidas
+```
+
+A comunicação com o modelo foi considerada **funcional e estável para os testes realizados**.
+
+---
+
+## 🔬 Próximos passos
+
+* Testar respostas estruturadas em JSON;
+* Validar tratamento de erros e timeout;
+* Testar prompts reais;
+* Avaliar uso de reasoning/thinking;
+* Criar um pequeno projeto utilizando o modelo;
+* Posteriormente integrar o provider em aplicações maiores.
+
+---
+
+## 📌 Observação
+
+Este repositório funciona principalmente como um **checkpoint de validação técnica da API**.
+
+Experimentos e aplicações posteriores podem ser desenvolvidos em branches separadas, mantendo a `main` como uma referência simples e funcional da comunicação com o Alibaba Cloud Model Studio.
+
+``
+``
