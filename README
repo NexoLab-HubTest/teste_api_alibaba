@@ -1,134 +1,219 @@
-````markdown
+# 🧪 PokéAPI + Qwen3.8-Max
 
-# 🧪 Teste de API — Alibaba Cloud Model Studio + Qwen3.8-Max
+Pequeno projeto experimental desenvolvido para explorar a integração entre uma **API pública tradicional** e um **Large Language Model**, utilizando a **PokéAPI** como fonte de dados e o **Qwen3.8-Max**, através do Alibaba Cloud Model Studio, para interpretação das informações obtidas.
 
-Repositório criado para validar a comunicação com o modelo **Qwen3.8-Max** através do **Alibaba Cloud Model Studio**, utilizando autenticação por **Workspace API Key** e integração compatível com a API da OpenAI.
-
-O objetivo inicial foi verificar conectividade, autenticação, estabilidade e comportamento básico da API antes de avançar para integrações mais completas.
+O projeto surgiu após a validação inicial da comunicação com a API do Qwen3.8-Max e funciona como um primeiro teste de utilização do modelo em um fluxo real.
 
 ---
 
-## 🎯 Objetivos
+## 🎯 Objetivo
 
-- Validar o acesso ao modelo `qwen3.8-max`;
-- Confirmar autenticação via Workspace API Key;
-- Testar comunicação via HTTP e Python;
-- Medir latência básica;
-- Verificar estabilidade em múltiplas requisições;
-- Criar uma base simples para experimentos posteriores.
+Construir um fluxo simples onde:
+
+1. O usuário informa o nome de um Pokémon;
+2. A aplicação consulta a PokéAPI;
+3. Os dados são tratados e normalizados;
+4. As informações são enviadas ao Qwen3.8-Max;
+5. O modelo gera uma análise textual utilizando os dados recebidos.
 
 ---
 
-## 🧰 Tecnologias
+## 🧩 Arquitetura
 
-- Python
-- OpenAI SDK
-- Alibaba Cloud Model Studio
-- Qwen3.8-Max
-- python-dotenv
+```text
+                ┌──────────────┐
+                │   Usuário    │
+                └──────┬───────┘
+                       │
+                       ▼
+                ┌──────────────┐
+                │   main.py    │
+                └──────┬───────┘
+                       │
+              ┌────────┴────────┐
+              │                 │
+              ▼                 │
+       ┌─────────────┐          │
+       │   PokéAPI   │          │
+       └──────┬──────┘          │
+              │                 │
+              ▼                 │
+       ┌──────────────┐         │
+       │ poke_service │         │
+       └──────┬───────┘         │
+              │                 │
+              └─────────┐       │
+                        ▼       │
+                 dados Python   │
+                        │       │
+                        ▼       │
+                 ┌──────────────┐
+                 │ qwen_service │
+                 └──────┬───────┘
+                        │
+                        ▼
+                 ┌──────────────┐
+                 │ Qwen3.8-Max  │
+                 └──────┬───────┘
+                        │
+                        ▼
+                    Análise
+```
+
+---
+
+## 🛠️ Tecnologias
+
+* Python
+* Alibaba Cloud Model Studio
+* Qwen3.8-Max
+* OpenAI SDK
+* PokéAPI
+* Pokebase
+* python-dotenv
 
 ---
 
 ## 📁 Estrutura
 
 ```text
-teste_api_alibaba/
+.
+├── services/
+│   ├── poke_service.py
+│   └── qwen_service.py
+│
+├── main.py
+├── .env
 ├── .env.example
 ├── .gitignore
-├── README.md
 ├── requirements.txt
-├── teste_qwen.py
-└── teste_estabilidade.py
-````
+└── README.md
+```
 
 ---
 
 ## ⚙️ Configuração
 
-Crie um ambiente virtual:
+### 1. Ambiente virtual
 
 ```bash
 python -m venv .venv
 ```
 
-Ative o ambiente no Git Bash:
+No Git Bash:
 
 ```bash
 source .venv/Scripts/activate
 ```
 
-Instale as dependências:
+---
+
+### 2. Dependências
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Crie um arquivo `.env` com base no `.env.example`:
+---
+
+### 3. Variáveis de ambiente
+
+Crie um arquivo `.env`:
 
 ```env
 ALIBABA_WORKSPACE_ID=seu_workspace_id
 DASHSCOPE_API_KEY=sua_api_key
 ```
 
-> ⚠️ O arquivo `.env` não deve ser versionado.
+> ⚠️ Nunca versione credenciais reais no Git.
+
+O `.env` deve permanecer listado no `.gitignore`.
 
 ---
 
 ## 🚀 Execução
 
-### Teste básico
+Na raiz do projeto:
 
 ```bash
-python teste_qwen.py
+python main.py
 ```
 
-Esse script valida:
+Em seguida:
 
-* autenticação;
-* acesso ao workspace;
-* disponibilidade do modelo;
-* resposta da API;
-* latência;
-* consumo de tokens.
+```text
+Digite o nome de um Pokémon: pikachu
+```
+
+A aplicação realizará duas etapas:
+
+```text
+PokéAPI
+   ↓
+Dados estruturados
+   ↓
+Qwen3.8-Max
+   ↓
+Análise
+```
 
 ---
 
-### Teste de estabilidade
+## 🔬 O que está sendo testado?
 
-```bash
-python teste_estabilidade.py
-```
+Este subprojeto permite validar mais do que apenas a conectividade com o modelo.
 
-O teste executa múltiplas chamadas consecutivas e apresenta:
+### PokéAPI
 
-* quantidade de sucessos;
-* quantidade de falhas;
-* latência mínima;
-* latência média;
-* latência máxima;
-* desvio padrão.
+* Consumo de API pública;
+* Utilização da biblioteca Pokebase;
+* Extração de dados;
+* Tratamento de objetos externos;
+* Normalização para estruturas Python.
+
+### Qwen3.8-Max
+
+* Integração via SDK;
+* Envio de dados estruturados;
+* Interpretação de contexto;
+* Geração em português;
+* Utilização de informações provenientes de outra API.
+
+### Aplicação
+
+* Separação de responsabilidades;
+* Tratamento básico de erros;
+* Uso de variáveis de ambiente;
+* Comunicação entre serviços independentes.
 
 ---
 
-## 📊 Resultados obtidos
-
-Durante a validação inicial foram realizadas **10 chamadas consecutivas** ao modelo.
+## 📊 Fluxo do experimento
 
 ```text
-Chamadas: 10
-Sucessos: 10
-Falhas: 0
-
-Latência mínima: 1.67s
-Latência média:  2.08s
-Latência máxima: 3.81s
-Desvio padrão:   0.70s
-```
-
-Taxa de sucesso observada:
-
-```text
-100%
+INPUT
+  │
+  │ "bulbasaur"
+  ▼
+PokéAPI
+  │
+  ▼
+{
+    "id": 1,
+    "nome": "bulbasaur",
+    "tipos": [...],
+    "habilidades": [...],
+    "stats": {...}
+}
+  │
+  ▼
+Qwen3.8-Max
+  │
+  ▼
+Análise contextualizada
+  │
+  ▼
+OUTPUT
 ```
 
 ---
@@ -136,36 +221,47 @@ Taxa de sucesso observada:
 ## ✅ Status
 
 ```text
-[✓] Workspace validado
-[✓] API Key validada
-[✓] Endpoint validado
-[✓] Qwen3.8-Max acessível
-[✓] Comunicação via cURL
-[✓] Comunicação via Python
+[✓] Comunicação com Qwen3.8-Max
+[✓] Teste básico via cURL
+[✓] Integração Python
 [✓] Teste de estabilidade
-[✓] 10/10 requisições bem-sucedidas
+
+[✓] Estrutura PokéAPI + Qwen
+[✓] Consulta de Pokémon
+[✓] Normalização dos dados
+[✓] Envio dos dados ao modelo
+
+[ ] Comparação entre Pokémon
+[ ] Resposta estruturada em JSON
+[ ] Histórico de consultas
+[ ] Métricas de latência por serviço
+[ ] Interface gráfica
 ```
 
-A comunicação com o modelo foi considerada **funcional e estável para os testes realizados**.
+---
+
+## 🧭 Próximos experimentos
+
+A partir desta base podem ser exploradas funcionalidades como:
+
+* Comparação entre dois Pokémon;
+* Recomendação baseada em atributos;
+* Análise de stats;
+* Busca por tipos e habilidades;
+* Respostas estruturadas em JSON;
+* Streaming das respostas do modelo;
+* Medição separada da latência da PokéAPI e do Qwen;
+* Tratamento de indisponibilidade de uma das APIs;
+* Interface web simples.
 
 ---
 
-## 🔬 Próximos passos
+## 📌 Contexto
 
-* Testar respostas estruturadas em JSON;
-* Validar tratamento de erros e timeout;
-* Testar prompts reais;
-* Avaliar uso de reasoning/thinking;
-* Criar um pequeno projeto utilizando o modelo;
-* Posteriormente integrar o provider em aplicações maiores.
+Este projeto é propositalmente pequeno.
 
----
+O objetivo não é construir uma aplicação completa sobre Pokémon, mas utilizar um domínio simples e uma API pública conhecida para experimentar uma arquitetura envolvendo:
 
-## 📌 Observação
+**API externa → processamento → LLM → resposta interpretada.**
 
-Este repositório funciona principalmente como um **checkpoint de validação técnica da API**.
-
-Experimentos e aplicações posteriores podem ser desenvolvidos em branches separadas, mantendo a `main` como uma referência simples e funcional da comunicação com o Alibaba Cloud Model Studio.
-
-``
-``
+Ele funciona como primeiro subprojeto após a validação da comunicação com o **Qwen3.8-Max no Alibaba Cloud Model Studio**.
